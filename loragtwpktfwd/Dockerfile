@@ -1,3 +1,5 @@
+RUN echo "rebuild once without cache"
+
 FROM raspbian/stretch as builder
 
 ARG LORA_REGION
