@@ -5,3 +5,7 @@ applicationEnvironmentVariables:
     - PIN_RESET: 11
     - MINER_URL: miner-helium
     - MODEL: RAK2245
+build-variables:
+    global:
+        - LORA_REGION=$LORA_REGION
+        - LORA_UDP=$LORA_UDP
