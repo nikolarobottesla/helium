@@ -8,6 +8,6 @@ applicationEnvironmentVariables:
     - MODEL: RAK2245
 build-variables:
     global:
-        - LORA_REGION: $LORA_REGION
-        - LORA_UDP: LORA_UDP
-        - SPI_SPEED: 200000
+        - LORA_REGION=$LORA_REGION
+        - LORA_UDP=LORA_UDP
+        - SPI_SPEED=200000
