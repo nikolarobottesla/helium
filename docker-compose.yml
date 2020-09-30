@@ -6,12 +6,8 @@ services:
     build:
       context: loragtwpktfwd
       args:
-        - LORA_REGION
         - LORA_UDP
         - SPI_SPEED
-        - PIN_RESET
-        - MINER_URL
-        - MODEL
     privileged: true
 
   helium-miner:
