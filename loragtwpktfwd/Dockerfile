@@ -7,15 +7,22 @@ ARG PIN_RESET
 ARG MINER_URL
 ARG MODEL
 
-RUN echo "Choosen region =>" $LORA_REGION
-RUN echo "Choosen LoRa UDP port => " $LORA_UDP
-RUN echo "Choosen SPI_SPEED =>" $SPI_SPEED
-RUN echo "Choosen PIN reset =>" $PIN_RESET
-RUN echo "Choosen URL miner =>" $MINER_URL
-RUN echo "Choosen RAK MODEL =>" $MODEL
+# settings args as env variables so they persist in the image once it is built
+ENV LORA_REGION=$LORA_REGION
+ENV LORA_UDP=$LORA_UDP
+ENV SPI_SPEED=$SPI_SPEED
+ENV PIN_RESET=$PIN_RESET
+ENV MINER_URL=$MINER_URL
+ENV MODEL=$MODEL
+
+RUN echo "Chosen region =>" $LORA_REGION
+RUN echo "Chosen LoRa UDP port => " $LORA_UDP
+RUN echo "Chosen SPI_SPEED =>" $SPI_SPEED
+RUN echo "Chosen PIN reset =>" $PIN_RESET
+RUN echo "Chosen URL miner =>" $MINER_URL
+RUN echo "Chosen RAK MODEL =>" $MODEL
 
 RUN apt-get update && apt-get install -y git build-essential wget
-
 
 WORKDIR /build
 

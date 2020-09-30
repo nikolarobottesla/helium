@@ -5,14 +5,14 @@ services:
     restart: always
     build:
       context: loragtwpktfwd
+      args:
+        - LORA_REGION=${LORA_REGION}
+        - LORA_UDP=${LORA_UDP}
+        - SPI_SPEED=${SPI_SPEED}
+        - PIN_RESET=${PIN_RESET}
+        - MINER_URL=${MINER_URL}
+        - MODEL=${MODEL}
     privileged: true
-    environment:
-      - LORA_REGION
-      - LORA_UDP
-      - SPI_SPEED
-      - PIN_RESET
-      - MINER_URL
-      - MODEL
 
   helium-miner:
     restart: always
@@ -24,7 +24,7 @@ services:
       - 'miner-data:/var/data'
       - 'miner-log:/var/log/miner'
     environment:
-      - 'REGION_OVERRIDE=${LORA_REGION}'
+      - REGION_OVERRIDE=${LORA_REGION}
   
   web:
     build: ./web
