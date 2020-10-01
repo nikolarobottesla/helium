@@ -1,17 +1,8 @@
 
 applicationEnvironmentVariables:
-    - LORA_REGION: US915
+    - LORA_REGION: EU868
     - LORA_UDP: 1680
     - SPI_SPEED: 200000
     - PIN_RESET: 11
     - MINER_URL: miner-helium
     - MODEL: RAK2245
-build-variables:
-    global:
-        - LORA_REGION="{{LORA_REGION}}"
-        - LORA_UDP="{{LORA_UDP}}"
-        - SPI_SPEED=200000
-        - PIN_RESET=11
-        - MINER_URL=miner-helium
-        - MODEL=RAK2245
-        - REGION_OVERRIDE=US915

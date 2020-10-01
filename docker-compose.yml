@@ -6,8 +6,12 @@ services:
     build:
       context: loragtwpktfwd
       args:
-        - LORA_UDP
-        - SPI_SPEED
+        - LORA_REGION: US915
+        - LORA_UDP: 1680
+        - SPI_SPEED: 200000
+        - PIN_RESET: 11
+        - MINER_URL: miner-helium
+        - MODEL: RAK2245
     privileged: true
 
   helium-miner:
@@ -20,7 +24,7 @@ services:
       - 'miner-data:/var/data'
       - 'miner-log:/var/log/miner'
     environment:
-      - REGION_OVERRIDE=${LORA_REGION}
+      - REGION_OVERRIDE=US915
   
   web:
     build: ./web
