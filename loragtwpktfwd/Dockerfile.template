@@ -30,24 +30,22 @@ WORKDIR /build
 RUN if [ -z "$MODEL" ] ; then echo MODEL has not been set, resuming... ; fi
 RUN if [ "$MODEL" = "RAK2245" ] ; then  git clone https://github.com/Lora-net/lora_gateway.git ; else git clone https://github.com/PastaGringo/sx1302_hal.git ;  fi
 
+RUN if [ "$MODEL" = "RAK2287" ] ; then cd sx1302_hal ; fi
+RUN if [ "$MODEL" = "RAK2287" ] ; then make clean all ; fi
+RUN if [ "$MODEL" = "RAK2287" ] ; then make install ; fi
+RUN if [ "$MODEL" = "RAK2287" ] ; then make install_conf ; fi
+RUN if [ "$MODEL" = "RAK2287" ] ; then cd .. ; fi
 
-RUN if [ "$MODEL" = "RAK2287" ] ; then cd sx1302_hal; fi
-RUN if [ "$MODEL" = "RAK2287" ] ; then make clean all; fi
-RUN if [ "$MODEL" = "RAK2287" ] ; then make install; fi
-RUN if [ "$MODEL" = "RAK2287" ] ; then make install_conf; fi
-RUN if [ "$MODEL" = "RAK2287" ] ; then cd ..; fi
+RUN if [ "$MODEL" = "RAK2245" ] ; then git clone https://github.com/Lora-net/packet_forwarder.git ; fi
 
-RUN if [ "$MODEL" = "RAK2245" ] ; then cc loragw_spi.native.c /build/lora_gateway/libloragw/src/; fi
-
-RUN if [ -z "$SPI_SPEED" ] ; then echo SPI_SPEED has not been set, resuming... ; else sed -i -e "s/2000000/$SPI_SPEED/g" /build/lora_gateway/libloragw/src/loragw_spi.native.c ; fi
-
-RUN if [ "$MODEL" = "RAK2245" ] ; then git clone https://github.com/Lora-net/packet_forwarder.git; fi
-RUN if [ "$MODEL" = "RAK2245" ] ; then cc lora_pkt_fwd.c /build/packet_forwarder/lora_pkt_fwd/src; fi
-
-
+COPY loragw_spi.native.c . 
+RUN if [ "$MODEL" = "RAK2245" ] ; then mv loragw_spi.native.c /build/lora_gateway/libloragw/src/loragw_spi.native.c ; fi
+COPY lora_pkt_fwd.c . 
+RUN if [ "$MODEL" = "RAK2245" ] ; then mv lora_pkt_fwd.c /build/packet_forwarder/lora_pkt_fwd/src/lora_pkt_fwd.c ; fi
 COPY global_conf_US.json .
 COPY global_conf_EU.json .
 
+RUN if [ -z "$SPI_SPEED" ] ; then echo SPI_SPEED has not been set, resuming... ; else sed -i -e "s/2000000/$SPI_SPEED/g" /build/lora_gateway/libloragw/src/loragw_spi.native.c ; fi
 RUN if [ "$LORA_REGION" = "EU868" ] ; then echo EU config detected && mv global_conf_EU.json global_conf.json ; fi
 RUN if [ "$LORA_REGION" = "US915" ] ; then echo US config detected && mv global_conf_US.json global_conf.json ; fi
 RUN if [ -z "$MINER_URL" ] ; then echo MINER_URL has not been set, resuming... ; else sed -i -e "s/helium-miner/$MINER_URL/g" global_conf.json ; fi
